@@ -19,6 +19,7 @@ const SaleForm = () => {
         
         // const data= await res.json();
         console.log(data)
+        
       }
   return (
     <div className=" bg-white p-5 rounded-lg border mb-5">
