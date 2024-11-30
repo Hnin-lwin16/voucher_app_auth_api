@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.focus input:focus{
+  border-color: #f05252;
+  --tw-ring-color: rgb(240 82 82 / var(--tw-ring-opacity));
+}
