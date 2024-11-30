@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import VouncherTable from './VouncherTable';
+import useRecordStore from '../store/useRecordStore';
 
 const SaleForm = () => {
     const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -15,10 +16,29 @@ const SaleForm = () => {
         }
     } = useForm();
     const [sendLoading,setSendLoading] = React.useState(false);
+    const {addRecord,records,changeQuantity} = useRecordStore();
     const onSubmit = (data) => {
+      const currentProduct = JSON.parse(data.product);
+      const currentProductId = currentProduct.id;
+      const isExisted = records.find(({product:{id}}) => id === currentProductId);
+
+      if(isExisted){
+        changeQuantity(isExisted.id,data.quantity);
+      }else{
+        const item = {
+          id: Date.now(),
+          product: currentProduct,
+         
+         quantity : data.quantity,
+         cost: currentProduct.price * data.quantity,
+          
+        }
+        addRecord(item);
+      }
+     
         
         // const data= await res.json();
-        console.log(data)
+        // console.log(item)
         
       }
   return (
@@ -41,7 +61,7 @@ const SaleForm = () => {
               <option value="">Select a product</option>
               {!isLoading &&
                 data.map((product) => (
-                  <option key={product.id} >
+                  <option key={product.id}  value={JSON.stringify(product)}>
                     {product.name}
                   </option>
                 ))}
