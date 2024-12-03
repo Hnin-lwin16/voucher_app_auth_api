@@ -19,7 +19,10 @@ const useRecordStore = create((set)=>({
                 return record;
             })
         }))
-    }
+    },
+    resetRecord: () => {
+        set({ records: [] });
+      },
     
 }))
 export default useRecordStore;

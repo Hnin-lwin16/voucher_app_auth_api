@@ -5,9 +5,14 @@ import { BiSearch } from 'react-icons/bi'
 
 import {  HiPencilSquare, HiPlus,  HiTrash } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
+import useSWR from 'swr'
+import SaleListRow from './SaleListRow'
 
 
 const VouncherList = () => {
+  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const {data, error, isLoading} = useSWR(import.meta.env.VITE_BASE_URL+"/vouchers", fetcher);
+ (!isLoading && console.log(data))
   return (
     <div className='mt-5'>
     <div className=' flex justify-between items-center mb-3'>
@@ -31,9 +36,7 @@ const VouncherList = () => {
       <Table.HeadCell className=' text-end'>Email</Table.HeadCell>
       <Table.HeadCell className=' text-end'>Created At</Table.HeadCell>
       <Table.HeadCell className=' text-end'>Action</Table.HeadCell>
-      <Table.HeadCell>
-        <span className="sr-only">Edit</span>
-      </Table.HeadCell>
+     
     </Table.Head>
     <Table.Body className="divide-y">
     <Table.Row className="bg-white hidden dark:border-gray-700 dark:bg-gray-800 colspan-5 last:table-row">
@@ -42,26 +45,35 @@ const VouncherList = () => {
         </Table.Cell>
         
       </Table.Row>
-      
-      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-         1
-        </Table.Cell>
-        <Table.Cell>Sai</Table.Cell>
-        <Table.Cell className=' text-end'>sai@gmail.com</Table.Cell>
-        <Table.Cell className=' text-end'>
-            <p>23.12.22</p>
-            <p>2:00PM</p>
-        </Table.Cell>
-        <Table.Cell className=' text-end'>
-        <Button.Group>
-  <Button color="gray">{<HiPencilSquare className=' text-gray-700'/>}</Button>
-  <Button color="gray"> {<HiTrash className='text-red-600'/>}</Button>
-  
-</Button.Group>
-          
-        </Table.Cell>
-      </Table.Row>
+    {
+      isLoading ? (
+        
+<Table.Row  className="bg-white dark:border-gray-700 dark:bg-gray-800 animate-pulse">
+      <Table.Cell className="whitespace-nowrap font-medium text-gray-400 dark:text-gray-600">
+        <div className="h-4 w-6 bg-gray-300 dark:bg-gray-700 rounded"></div>
+      </Table.Cell>
+      <Table.Cell>
+        <div className="h-4 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+      </Table.Cell>
+      <Table.Cell className="text-end">
+        <div className="h-4 w-24 bg-gray-300 dark:bg-gray-700 rounded"></div>
+      </Table.Cell>
+      <Table.Cell className="text-end">
+        <div className="space-y-1">
+          <div className="h-4 w-16 bg-gray-300 dark:bg-gray-700 rounded"></div>
+          <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700 rounded"></div>
+        </div>
+      </Table.Cell>
+      <Table.Cell className="text-end">
+        <div className="h-4 w-20 bg-gray-300 dark:bg-gray-700 rounded"></div>
+      </Table.Cell>
+    </Table.Row>
+    
+ ):(
+      data?.map((list)=> (<SaleListRow key={list.id} list={list}/>))
+      )
+    }
+    
     </Table.Body>
   </Table>
 </div>

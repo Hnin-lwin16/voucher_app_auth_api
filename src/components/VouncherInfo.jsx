@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Checkbox, Datepicker, Label, TextInput } from 'flowbite-react'
 import { useForm } from 'react-hook-form';
 import SaleForm from './SaleForm';
+import useRecordStore from '../store/useRecordStore';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const VouncherInfo = () => {
     const{
@@ -12,11 +15,29 @@ const VouncherInfo = () => {
             errors
         }
     } = useForm();
-    const [sendLoading,setSendLoading] = React.useState(false);
-    const handleForm = (data) => {
-        
+    const {records,resetRecord} = useRecordStore();
+    const [sendLoading,setSendLoading] = useState(false);
+
+    const handleForm = async (sale) => {
+      setSendLoading(true);
+       const total = records.reduce((total,record)=>total+record.cost,0);
+      const taxi = total * 0.07;
+      const netTotal = total+taxi;
+      const created_at = new Date();
+      
+      const {data} = await axios.post(import.meta.env.VITE_BASE_URL+"/vouchers", {...sale,records,total,taxi,netTotal,created_at},{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      setSendLoading(false);
+
+      toast.success('Successfully Voucher Created!')
         // const data= await res.json();
-        console.log(data)
+        // console.log({...sale,records,total,taxi,netTotal})
+        reset();
+      resetRecord();
       }
 
        // Function to generate a random alphanumeric string
@@ -96,7 +117,7 @@ const VouncherInfo = () => {
      <SaleForm/>
     <div className=' flex gap-5 justify-end'>
     <div className="flex items-center gap-2">
-        <Checkbox id="remember" {...register("check",{ required: true })}/>
+        <Checkbox form='form' id="remember" {...register("check",{ required: true })}/>
         <Label htmlFor="remember">Make Sure all field are correct</Label>
        
       </div>

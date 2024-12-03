@@ -24,6 +24,7 @@ const SaleForm = () => {
 
       if(isExisted){
         changeQuantity(isExisted.id,data.quantity);
+        reset();
       }else{
         const item = {
           id: Date.now(),
@@ -34,6 +35,7 @@ const SaleForm = () => {
           
         }
         addRecord(item);
+        reset();
       }
      
         

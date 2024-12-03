@@ -5,6 +5,7 @@ import { useSWRConfig } from 'swr'
 import { bouncy } from 'ldrs'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
+import ShowDateTime from './ShowDateTime'
 
 
 
@@ -48,10 +49,7 @@ const ProductRow = ({product:{
             </Table.Cell>
             <Table.Cell>{name}</Table.Cell>
             <Table.Cell className=' text-end'>{price}</Table.Cell>
-            <Table.Cell className=' text-end'>
-                <p>{date}</p>
-                <p>{time}</p>
-            </Table.Cell>
+            <ShowDateTime created_at={created_at}/>
             <Table.Cell className=' text-end'>
             <Button.Group>
       <Button color="gray" className='flex items-center justify-center w-10' >
