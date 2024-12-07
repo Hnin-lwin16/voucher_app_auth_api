@@ -5,6 +5,7 @@ import SaleForm from './SaleForm';
 import useRecordStore from '../store/useRecordStore';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const VouncherInfo = () => {
     const{
@@ -17,7 +18,7 @@ const VouncherInfo = () => {
     } = useForm();
     const {records,resetRecord} = useRecordStore();
     const [sendLoading,setSendLoading] = useState(false);
-
+    const navigate = useNavigate();
     const handleForm = async (sale) => {
       setSendLoading(true);
        const total = records.reduce((total,record)=>total+record.cost,0);
@@ -38,8 +39,14 @@ const VouncherInfo = () => {
         // console.log({...sale,records,total,taxi,netTotal})
         reset();
       resetRecord();
+     const res = await data;
+    //  console.log(JSON.stringify(res));
+    
+     if(sale.redirect){
+      navigate("/vouncher/voucherDetail/"+res.id)
       }
-
+      
+    }
        // Function to generate a random alphanumeric string
   const generateRandomString = (length) => {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -115,10 +122,15 @@ const VouncherInfo = () => {
      </div>
      </form>
      <SaleForm/>
-    <div className=' flex gap-5 justify-end'>
+    <div className='flex flex-col gap-3 items-end '>
     <div className="flex items-center gap-2">
         <Checkbox form='form' id="remember" {...register("check",{ required: true })}/>
         <Label htmlFor="remember">Make Sure all field are correct</Label>
+       
+      </div>
+      <div className="flex items-center gap-2">
+        <Checkbox form='form'  {...register("redirect")}/>
+        <Label >Redirect to voucher Detail</Label>
        
       </div>
      <Button form='form' outline type="submit" className=' flex items-center justify-center w-[150px]'>

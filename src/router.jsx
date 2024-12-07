@@ -4,11 +4,11 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
 
-import VouncherDetail from "./pages/VouncherDetail";
 import Sale from "./pages/Sale";
 import ProductCreate from "./pages/ProductCreate";
 import Vouncher from "./pages/Vouncher";
 import ProductEdit from "./pages/ProductEdit";
+import VoucherDetail from "./pages/VoucherDetail";
 
 const router = createBrowserRouter([
     {
@@ -41,8 +41,8 @@ const router = createBrowserRouter([
                 element:<Vouncher/>
             },
             {
-                path:"/vouncherDetail",
-                element:<VouncherDetail/>
+                path:"/vouncher/voucherDetail/:id",
+                element:<VoucherDetail/>
             }
         ]
     }

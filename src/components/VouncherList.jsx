@@ -12,7 +12,7 @@ import SaleListRow from './SaleListRow'
 const VouncherList = () => {
   const fetcher = (...args) => fetch(...args).then(res => res.json())
   const {data, error, isLoading} = useSWR(import.meta.env.VITE_BASE_URL+"/vouchers", fetcher);
- (!isLoading && console.log(data))
+ (!isLoading && console.log("start"))
   return (
     <div className='mt-5'>
     <div className=' flex justify-between items-center mb-3'>

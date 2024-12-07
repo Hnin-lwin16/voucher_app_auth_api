@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Button, Label, Table, TextInput } from 'flowbite-react'
-import {  HiPencilSquare, HiPlus,  HiTrash } from 'react-icons/hi2'
+import {  HiArrowDownLeft, HiArrowLeft, HiArrowRight, HiPencilSquare, HiPlus,  HiTrash } from 'react-icons/hi2'
 import ShowDateTime from './ShowDateTime'
 import { useSWRConfig } from 'swr'
 import { bouncy } from 'ldrs'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { list } from 'postcss'
+import { Link } from 'react-router-dom'
 bouncy.register()
 const SaleListRow = ({list:{
    voucherId,
@@ -48,6 +49,7 @@ const SaleListRow = ({list:{
         <Table.Cell className=' text-end'>
       
  
+        <div className=' flex gap-1 justify-end'>
         <Button color="gray" className=' flex items-center justify-center w-10' onClick={handleSaleDelete}> 
         {
             deleteLoading ? (<l-bouncy
@@ -58,6 +60,19 @@ const SaleListRow = ({list:{
         }
       
         </Button>
+        <Link to={`/vouncher/voucherDetail/${id}`}>
+        <Button color="gray" className=' flex items-center justify-center w-10'> 
+        {
+            deleteLoading ? (<l-bouncy
+                size="15"
+                speed="1.75" 
+                color="black" 
+              ></l-bouncy>):(<HiArrowRight className='text-red-600'/>)
+        }
+      
+        </Button>
+        </Link>
+        </div>
   
 
           
