@@ -41,7 +41,7 @@ const SaleListRow = ({list:{
       
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        1
+        {voucherId}
         </Table.Cell>
         <Table.Cell>{customer}</Table.Cell>
         <Table.Cell className=' text-end'>{email}</Table.Cell>

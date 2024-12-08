@@ -44,7 +44,7 @@ const SaleForm = () => {
         
       }
   return (
-    <div className=" bg-white p-5 rounded-lg border mb-5">
+    <div className=" bg-white p-5 rounded-lg border">
       <form action="#" id="recordForm" onSubmit={handleSubmit(onSubmit)} className=' mb-5'>
         <div className="grid grid-cols-5 gap-5">
           <div className="col-span-2">

@@ -68,9 +68,12 @@ const VouncherInfo = () => {
 
 
   return (
-    <div>
-         <form className=" my-5" onSubmit={handleSubmit(handleForm)} id='form'>
-     <div className=' grid grid-cols-1 md:grid-cols-4 gap-5'>
+    <div className=' grid grid-cols-4 gap-5 mt-5'>
+      <div className="col-span-3">
+      <SaleForm />
+      </div>
+         <form className=" col-span-1 flex flex-col h-full" onSubmit={handleSubmit(handleForm)} id='form'>
+     <div className=' grid grid-cols-1 md:grid-cols-1 gap-3'>
         <div className=' grid-cols-1'>
         <div>
         
@@ -107,7 +110,7 @@ const VouncherInfo = () => {
         {errors.email && errors.email.type === "minLength" && (<p className=' text-red-500 text-sm'>Customer Email should be at least 3 characters</p>)}
         </div>
         </div>
-        <div className=' grid-cols-1'>
+        <div className=' grid-cols-1 mb-3'>
         <div>
         
         <div className="mb-2 block">
@@ -120,9 +123,7 @@ const VouncherInfo = () => {
         </div>
         
      </div>
-     </form>
-     <SaleForm/>
-    <div className='flex flex-col gap-3 items-end '>
+     <div className='flex flex-col gap-3 items-center mt-auto'>
     <div className="flex items-center gap-2">
         <Checkbox form='form' id="remember" {...register("check",{ required: true })}/>
         <Label htmlFor="remember">Make Sure all field are correct</Label>
@@ -144,6 +145,9 @@ const VouncherInfo = () => {
         </div>) : "Confirm Voucher"}
       </Button>
     </div>
+     </form>
+    
+   
     </div>
   )
 }
