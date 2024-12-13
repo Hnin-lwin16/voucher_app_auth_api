@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 const VoucherListRow = ({record:{
     id,
-    product:{name,price},
+    product:{product_name,price},
     quantity,
     cost
 },index}) => {
@@ -28,7 +28,7 @@ const VoucherListRow = ({record:{
         scope="row"
         className="record-name px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
-        {name}
+        {product_name}
       </th>
       <td className="px-6 py-4 text-end record-price">{price}</td>
       <td className="px-6 py-4 text-end">

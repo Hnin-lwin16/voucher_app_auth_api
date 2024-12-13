@@ -25,17 +25,18 @@ const EditForm = () => {
     } = useForm();
 
     const handleForm = async(result) => {
-        
+        console.log(result)
       const item =  {
-        name: result.name,
+        product_name: result.product_name,
         price: result.price ,
-        created_at: new Date()
+        
       }
       setSendLoading(true);
       
-      const res = await fetch(`http://localhost:5000/products/${id}`, {
-        method: 'Put',
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/products/${id}`, {
+        method: 'PUT',
         headers: {
+          'accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(item)
@@ -94,16 +95,16 @@ const EditForm = () => {
         <div className="mb-2 block">
           <Label htmlFor="name" value="Product Name" />
         </div>
-        <TextInput defaultValue={data.name}  {...register("name",{ required: true, minLength: 3 })} className={`${errors.name && errors.name.type === "required" && ( "focus")} ${errors.name && errors.name.type === "minLength" && ( "focus")}`}
+        <TextInput defaultValue={data.data.product_name}  {...register("product_name",{ required: true, minLength: 3 })} className={`${errors.product_name && errors.product_name.type === "required" && ( "focus")} ${errors.name && errors.name.type === "minLength" && ( "focus")}`}
   id="name" type="text" placeholder="apple" />
-        {errors.name && errors.name.type === "required" && (<p className=' text-red-500'>Name should be required</p>)}
-        {errors.name && errors.name.type === "minLength" && (<p className=' text-red-500'>Name should be at least 3 characters</p>)}
+        {errors.product_name && errors.product_name.type === "required" && (<p className=' text-red-500'>Name should be required</p>)}
+        {errors.product_name && errors.product_name.type === "minLength" && (<p className=' text-red-500'>Name should be at least 3 characters</p>)}
       </div>
       <div>
         <div className="mb-2 block">
           <Label htmlFor="price" value="Product Price" />
         </div>
-        <TextInput {...register("price",{ required: true,min: 100, max: 20000  })} defaultValue={data.price}  className={`${errors.price && errors.price.type === "required" && ( "focus")} ${errors.price && errors.price.type === "min" && ( "focus")} ${errors.price && errors.price.type === "max" && ( "focus")}`} id="price" type="number" placeholder='100'/>
+        <TextInput {...register("price",{ required: true,min: 100, max: 20000  })} defaultValue={data.data.price}  className={`${errors.price && errors.price.type === "required" && ( "focus")} ${errors.price && errors.price.type === "min" && ( "focus")} ${errors.price && errors.price.type === "max" && ( "focus")}`} id="price" type="number" placeholder='100'/>
 
         {errors.price && errors.price.type === "required" && (<p className=' text-red-500'>Price should be required</p>)}
         {errors.price && errors.price.type === "min" && (<p className=' text-red-500'>Price should be 100 minimum</p>)}

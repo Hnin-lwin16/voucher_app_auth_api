@@ -13,7 +13,7 @@ import ShowDateTime from './ShowDateTime'
 
 
 const ProductRow = ({product:{
-    id,name,price,created_at
+    id,product_name,price,created_at,updated_at
 }}) => {
     bouncy.register()
     const {mutate} = useSWRConfig();
@@ -47,9 +47,10 @@ const ProductRow = ({product:{
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
              {id}
             </Table.Cell>
-            <Table.Cell>{name}</Table.Cell>
+            <Table.Cell>{product_name}</Table.Cell>
             <Table.Cell className=' text-end'>{price}</Table.Cell>
             <ShowDateTime created_at={created_at}/>
+            <ShowDateTime created_at={updated_at}/>
             <Table.Cell className=' text-end'>
             <Button.Group>
       <Button color="gray" className='flex items-center justify-center w-10' >

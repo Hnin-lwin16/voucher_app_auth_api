@@ -16,10 +16,10 @@ const VouncherList = () => {
   const inputRef = useRef();
   const fetcher = (...args) => fetch(...args).then(res => res.json())
   const {data, error, isLoading} = useSWR(!search ? (import.meta.env.VITE_BASE_URL+"/vouchers"):(
-    import.meta.env.VITE_BASE_URL+"/vouchers?voucherId_like="+search
+    import.meta.env.VITE_BASE_URL+"/vouchers?q="+search
   ), fetcher);
   
- 
+  console.log(data);
  const handleSearch = debounce((value)=>{
   // setSearch(e.target.value)
   setSearch(value)
@@ -34,6 +34,7 @@ const VouncherList = () => {
   inputRef.current.value = ""
   setSearch("")
  }
+ 
  
  (!isLoading && console.log("start"))
   return (
@@ -93,7 +94,7 @@ const VouncherList = () => {
     </Table.Row>
     
  ):(
-      data?.map((list)=> (<SaleListRow key={list.id} list={list}/>))
+      data.data?.map((list)=> (<SaleListRow key={list.voucher_id} list={list}/>))
       )
     }
     

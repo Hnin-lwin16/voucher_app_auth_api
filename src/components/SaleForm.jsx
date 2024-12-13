@@ -6,7 +6,7 @@ import useRecordStore from '../store/useRecordStore';
 
 const SaleForm = () => {
     const fetcher = (...args) => fetch(...args).then(res => res.json())
-    const{isLoading,data,error} = useSWR('http://localhost:5000/products',fetcher);
+    const{isLoading,data,error} = useSWR(`${import.meta.env.VITE_BASE_URL}/products`,fetcher);
     const{
         register,
         handleSubmit,
@@ -18,7 +18,8 @@ const SaleForm = () => {
     const [sendLoading,setSendLoading] = React.useState(false);
     const {addRecord,records,changeQuantity} = useRecordStore();
     const onSubmit = (data) => {
-      const currentProduct = JSON.parse(data.product);
+      // console.log(data.product_name);
+      const currentProduct = JSON.parse(data.product_name);
       const currentProductId = currentProduct.id;
       const isExisted = records.find(({product:{id}}) => id === currentProductId);
 
@@ -27,9 +28,9 @@ const SaleForm = () => {
         reset();
       }else{
         const item = {
-          id: Date.now(),
+          created_at: new Date().toISOString(),
           product: currentProduct,
-         
+          product_id: currentProduct.id,
          quantity : data.quantity,
          cost: currentProduct.price * data.quantity,
           
@@ -56,15 +57,15 @@ const SaleForm = () => {
             </label>
             <select
               id="productSelect"
-              {...register("product")}
+              {...register("product_name")}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
             >
               <option value="">Select a product</option>
               {!isLoading &&
-                data.map((product) => (
+                data.data.map((product) => (
                   <option key={product.id}  value={JSON.stringify(product)}>
-                    {product.name}
+                    {product.product_name}
                   </option>
                 ))}
             </select>

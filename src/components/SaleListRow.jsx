@@ -10,11 +10,11 @@ import { list } from 'postcss'
 import { Link } from 'react-router-dom'
 bouncy.register()
 const SaleListRow = ({list:{
-   voucherId,
+   voucher_id,
    id,
-    customer,
+    customer_name,
     date,
-    email,
+    customer_email,
     created_at
 }}) => {
    
@@ -41,10 +41,10 @@ const SaleListRow = ({list:{
       
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        {voucherId}
+        {voucher_id}
         </Table.Cell>
-        <Table.Cell>{customer}</Table.Cell>
-        <Table.Cell className=' text-end'>{email}</Table.Cell>
+        <Table.Cell>{customer_name}</Table.Cell>
+        <Table.Cell className=' text-end'>{customer_email}</Table.Cell>
        <ShowDateTime created_at={created_at}/>
         <Table.Cell className=' text-end'>
       

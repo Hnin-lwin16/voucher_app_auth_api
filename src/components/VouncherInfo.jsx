@@ -19,27 +19,30 @@ const VouncherInfo = () => {
     const {records,resetRecord} = useRecordStore();
     const [sendLoading,setSendLoading] = useState(false);
     const navigate = useNavigate();
+    console.log(records.product)
     const handleForm = async (sale) => {
       setSendLoading(true);
        const total = records.reduce((total,record)=>total+record.cost,0);
-      const taxi = total * 0.07;
-      const netTotal = total+taxi;
+      const tax = total * 0.07;
+      const net_total = total+tax;
       const created_at = new Date();
-      
-      const {data} = await axios.post(import.meta.env.VITE_BASE_URL+"/vouchers", {...sale,records,total,taxi,netTotal,created_at},{
+      // const voucher_id = records.product.id;
+      console.log({...sale,records,total,tax,net_total})
+      const {data} = await axios.post(import.meta.env.VITE_BASE_URL+"/vouchers", {...sale,records,total,tax,net_total},{
         headers: {
           'Content-Type': 'application/json'
         }
       })
-      
-      setSendLoading(false);
+      // const res= await data.json();
+      //   console.log(res)
+      // setSendLoading(false);
 
       toast.success('Successfully Voucher Created!')
-        // const data= await res.json();
-        // console.log({...sale,records,total,taxi,netTotal})
-        reset();
-      resetRecord();
-     const res = await data;
+        
+      //   // console.log({...sale,records,total,taxi,netTotal})
+      //   reset();
+      // resetRecord();
+    
     //  console.log(JSON.stringify(res));
     
      if(sale.redirect){
@@ -65,7 +68,7 @@ const VouncherInfo = () => {
     const voucher = `${formattedDate}-${randomString}`;
     return voucher;
   };
-
+  
 
   return (
     <div className=' grid grid-cols-4 gap-5 mt-5'>
@@ -78,47 +81,47 @@ const VouncherInfo = () => {
         <div>
         
         <div className="mb-2 block">
-          <Label  value="Voucher Id" className={`${errors.voucherId && ( "text-red-700")}`} />
+          <Label  value="Voucher Id" className={`${errors.voucher_id && ( "text-red-700")}`} />
         </div>
-        <TextInput defaultValue={generateVoucherId()}  {...register("voucherId",{ required: true, minLength: 3 })} color={`${errors.voucherId &&  ( "failure")}`}
+        <TextInput defaultValue={generateVoucherId()}  {...register("voucher_id",{ required: true, minLength: 3 })} color={`${errors.voucher_id &&  ( "failure")}`}
    type="text" placeholder="20241120-I2IYMC" />
-        {errors.voucherId && errors.voucherId.type === "required" && (<p className=' text-red-500 text-sm'>Voucher Id should be required</p>)}
-        {errors.voucherId && errors.voucherId.type === "minLength" && (<p className=' text-red-500 text-sm'>Voucher Id should be at least 3 characters</p>)}
+        {errors.voucher_id && errors.voucher_id.type === "required" && (<p className=' text-red-500 text-sm'>Voucher Id should be required</p>)}
+        {errors.voucher_id && errors.voucher_id.type === "minLength" && (<p className=' text-red-500 text-sm'>Voucher Id should be at least 3 characters</p>)}
         </div>
         </div>
         <div className=' grid-cols-1'>
         <div>
         
         <div className="mb-2 block">
-          <Label  value="Customer Name" className={`${errors.customer && ( "text-red-700")}`} />
+          <Label  value="Customer Name" className={`${errors.customer_name && ( "text-red-700")}`} />
         </div>
-        <TextInput  {...register("customer",{ required: true, minLength: 3 })} color={`${errors.customer &&  ( "failure")}`}
+        <TextInput  {...register("customer_name",{ required: true, minLength: 3 })} color={`${errors.customer_name &&  ( "failure")}`}
    type="text" placeholder="Sai" />
-        {errors.customer && errors.customer.type === "required" && (<p className=' text-red-500 text-sm'>Customer Name should be required</p>)}
-        {errors.customer && errors.customer.type === "minLength" && (<p className=' text-red-500 text-sm'>Customer Name should be at least 3 characters</p>)}
+        {errors.customer_name && errors.customer_name.type === "required" && (<p className=' text-red-500 text-sm'>Customer Name should be required</p>)}
+        {errors.customer_name && errors.customer_name.type === "minLength" && (<p className=' text-red-500 text-sm'>Customer Name should be at least 3 characters</p>)}
         </div>
         </div>
         <div className=' grid-cols-1'>
         <div>
         
         <div className="mb-2 block">
-          <Label  value="Customer Email" className={`${errors.email && ( "text-red-700")}`} />
+          <Label  value="Customer Email" className={`${errors.customer_email && ( "text-red-700")}`} />
         </div>
-        <TextInput  {...register("email",{ required: true, minLength: 3 })} color={`${errors.email &&  ( "failure")}`}
+        <TextInput  {...register("customer_email",{ required: true, minLength: 3 })} color={`${errors.customer_email &&  ( "failure")}`}
    type="text" />
-        {errors.email && errors.email.type === "required" && (<p className=' text-red-500 text-sm'>Customer Email should be required</p>)}
-        {errors.email && errors.email.type === "minLength" && (<p className=' text-red-500 text-sm'>Customer Email should be at least 3 characters</p>)}
+        {errors.customer_email && errors.customer_email.type === "required" && (<p className=' text-red-500 text-sm'>Customer Email should be required</p>)}
+        {errors.customer_email && errors.customer_email.type === "minLength" && (<p className=' text-red-500 text-sm'>Customer Email should be at least 3 characters</p>)}
         </div>
         </div>
         <div className=' grid-cols-1 mb-3'>
         <div>
         
         <div className="mb-2 block">
-          <Label  value="Sale Date" className={`${errors.date && ( "text-red-700")}`} />
+          <Label  value="Sale Date" className={`${errors.sale_date && ( "text-red-700")}`} />
         </div>
-        <input defaultValue={new Date().toISOString().split('T')[0]} type='date' {...register("date",{ required: true})}  className={`${errors.date && ( " border-red-700")} border-2 rounded-lg w-full`} />
+        <input defaultValue={new Date().toISOString().slice(0, 10)} type='date' {...register("sale_date",{ required: true})}  className={`${errors.sale_date && ( " border-red-700")} border-2 rounded-lg w-full`} />
        
-        {errors.date && errors.date.type === "required" && (<p className=' text-red-500 text-sm'>Date should be required</p>)}
+        {errors.sale_date && errors.sale_date.type === "required" && (<p className=' text-red-500 text-sm'>Date should be required</p>)}
         </div>
         </div>
         

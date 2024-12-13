@@ -4,7 +4,9 @@ import VoucherListRow from './VoucherListRow';
 <VoucherListRow/>
 const VouncherTable = () => {
   const {records} = useRecordStore();
+
   const total = records.reduce((total,record)=>total+record.cost,0);
+ 
   const taxi = total * 0.07;
   const netTotal = total+taxi;
 

@@ -3,15 +3,17 @@ import printJS from 'print-js';
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import useSWR from 'swr';
+import ShowDateTime from './ShowDateTime';
 
 const VoucherCard = () => {
 
     const id = useParams().id;
+   
     const fetcher = (...args) => fetch(...args).then(res => res.json());
     // console.log(import.meta.env.VITE_BASE_URL+"/vouchers/"+id)
   const { data, error, isLoading } = useSWR(import.meta.env.VITE_BASE_URL+"/vouchers/"+id, fetcher);
   
-    // console.log(id)
+    console.log(data)
     const handlePrint = () => {
         printJS({
           printable: 'printArea',
@@ -20,13 +22,28 @@ const VoucherCard = () => {
 
         });
       };
+    // {
+    //   isLoading && console.log(data.data)
+    // }
+    
+    const created = new Date();
+    const date = created.toLocaleDateString('de-DE',{
+        day: 'numeric',
+        month: 'short',
+        year: '2-digit',
+    });
+    const time = created.toLocaleTimeString('de-DE',{
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+    });
 
       const handleDownloadPDF = () => {
         const element = document.getElementById('printArea');
     
         // Configure html2pdf options
         const options = {
-            margin: [10, 10, 10, 10], // Add margin around the content
+            margin: [10, 10, 10, 10], // Ad}dd margin around the content
             filename: 'voucher.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: {
@@ -56,12 +73,12 @@ const VoucherCard = () => {
       <div className="flex justify-between items-start mb-8">
         <div>
           <h1 className="text-4xl font-bold mb-2">INVOICE</h1>
-          <p className="text-xl">{data.voucherId}</p>
+          <p className="text-xl">{data.data.voucher_id}</p>
         </div>
         <div className="text-right">
           <p className="font-bold">Invoice to</p>
-          <p>{data.customer}</p>
-          <p>Date: {data.date}</p>
+          <p>{data.data.customer_name}</p>
+          <p>Date: {data.data.sale_date}</p>
         </div>
       </div>
 
@@ -76,10 +93,10 @@ const VoucherCard = () => {
           </tr>
         </thead>
         <tbody>
-          {data.records.map((record, index) => (
+          {data.data.records.map((record, index) => (
             <tr key={record.id} className="border-b border-gray-200">
               <td className="py-2 text-sm">{index + 1}</td>
-              <td className="py-2 text-sm">{record.product.name}</td>
+              <td className="py-2 text-sm">{record.product.product_name}</td>
               <td className="text-right py-2 text-sm">{record.quantity}</td>
               <td className="text-right py-2 text-sm">
                 {record.product.price}
@@ -93,19 +110,19 @@ const VoucherCard = () => {
             <td className="py-2 text-right text-sm" colSpan={4}>
               Total
             </td>
-            <td className="py-2 text-right text-sm">{data.total.toFixed(2)}</td>
+            <td className="py-2 text-right text-sm">{parseFloat(data.data.total).toFixed(2)}</td>
           </tr>
           <tr className="border-b border-gray-200">
             <td className="py-2 text-right text-sm" colSpan={4}>
               Tax
             </td>
-            <td className="py-2 text-right text-sm">{data.taxi.toFixed(2)}</td>
+            <td className="py-2 text-right text-sm">{parseFloat(data.data.tax).toFixed(2)}</td>
           </tr>
           <tr className="border-b border-gray-200">
             <td className="py-2 text-right text-sm" colSpan={4}>
               Net Total
             </td>
-            <td className="py-2 text-right text-sm">{data.netTotal.toFixed(2)}</td>
+            <td className="py-2 text-right text-sm">{parseFloat(data.data.net_total).toFixed(2)}</td>
           </tr>
         </tfoot>
       </table>
@@ -129,7 +146,7 @@ const VoucherCard = () => {
         <p className="mt-4 text-center text-sm">Thanks to You</p>
       </div>
     </div>
-    <div className="flex flex-col gap-3" printable>
+    <div className="flex flex-col gap-3" >
       <button
         className="text-white flex justify-center items-center gap-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         onClick={handlePrint}

@@ -22,13 +22,13 @@ const CreateForm = () => {
 
     const handleForm = async(data) => {
       const item =  {
-        name: data.name,
+        product_name: data.name,
         price: data.price ,
-        created_at: new Date()
+       
       }
       setSendLoading(true);
       
-      const res = await fetch('http://localhost:5000/products', {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

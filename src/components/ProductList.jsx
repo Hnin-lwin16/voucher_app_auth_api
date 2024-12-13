@@ -1,5 +1,5 @@
 import { Button, Label, Table, TextInput } from 'flowbite-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { BiSearch } from 'react-icons/bi'
 
 
@@ -8,19 +8,23 @@ import { Link } from 'react-router-dom'
 import useSWR from 'swr'
 import ProductRow from './ProductRow'
 import ProductEmptySpace from './ProductEmptySpace'
+import { debounce } from 'lodash'
 
 
 const ProductList = () => {
+  const [search,setSearch] = useState("");
   const fetcher = (...args) => fetch(...args).then(res => res.json())
-  const { data, error, isLoading } = useSWR(import.meta.env.VITE_BASE_URL+"/products", fetcher);
+  const { data, error, isLoading } = useSWR(search?(import.meta.env.VITE_BASE_URL+"/products?q="+search):(import.meta.env.VITE_BASE_URL+"/products"), fetcher);
+  const handleSearch = debounce((value)=>{
+   setSearch(value.target.value)
+  },500)
 
-  
   return (
     <div className='mt-5'>
         <div className=' flex justify-between items-center mb-3'>
         <div className="max-w-md">
      
-      <TextInput id="email4" type="email" icon={BiSearch}   placeholder="Search Product" required />
+      <TextInput onChange={handleSearch} id="email4" type="email" icon={BiSearch}   placeholder="Search Product" required />
        
       
     </div>
@@ -37,6 +41,7 @@ const ProductList = () => {
           <Table.HeadCell>Product name</Table.HeadCell>
           <Table.HeadCell className=' text-end'>Price</Table.HeadCell>
           <Table.HeadCell className=' text-end'>Created At</Table.HeadCell>
+          <Table.HeadCell className=' text-end'>Updated Ar</Table.HeadCell>
           <Table.HeadCell className=' text-end'>Action</Table.HeadCell>
           
         </Table.Head>
@@ -70,7 +75,7 @@ const ProductList = () => {
             </Table.Cell>
           </Table.Row>):(
           data.length===0?(<ProductEmptySpace/>):
-            (data.map(product=>
+            (data.data.map(product=>
               (<ProductRow key={product.id} product={product}/>)
             
           ))
