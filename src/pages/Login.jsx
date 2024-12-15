@@ -4,8 +4,11 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
+import useCookie from 'react-use-cookie';
 const Login = () => {
     const {handleSubmit,register,formState:{errors}} = useForm();
+    const [token,setToken,removeToken] = useCookie("myToken");
+    const [user,setUser] = useCookie("userProfile");
     const navigate = useNavigate();
     const onSubmit = async(data) => {
         console.log(data)
@@ -21,6 +24,10 @@ const Login = () => {
         console.log(res.status)
         if(res.status == 200){
             toast.success('Successfully Logged In!');
+            // setUser(json)
+            // console.log(json.user);
+            setUser(JSON.stringify(json.user));
+            setToken(json.token);
            navigate("/dashboard");
         }else{
             toast.error(json.message);

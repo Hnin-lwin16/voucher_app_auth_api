@@ -5,7 +5,7 @@ import { HiMiniHome } from 'react-icons/hi2'
 const BreadCrumb = ({currentstate,link}) => {
   return (
     <Breadcrumb aria-label="Default breadcrumb example">
-      <Breadcrumb.Item href="/">
+      <Breadcrumb.Item href="/dashboard">
       {<HiMiniHome/>}
         Home
       </Breadcrumb.Item>

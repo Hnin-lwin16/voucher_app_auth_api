@@ -9,11 +9,20 @@ import useSWR from 'swr'
 import ProductRow from './ProductRow'
 import ProductEmptySpace from './ProductEmptySpace'
 import { debounce } from 'lodash'
+import useCookie from 'react-use-cookie'
 
 
 const ProductList = () => {
   const [search,setSearch] = useState("");
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const [token] = useCookie("myToken");
+  console.log(token);
+  
+  const fetcher = (url) => fetch(url,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type":"application/json"
+    }
+  }).then(res => res.json())
   const { data, error, isLoading } = useSWR(search?(import.meta.env.VITE_BASE_URL+"/products?q="+search):(import.meta.env.VITE_BASE_URL+"/products"), fetcher);
   const handleSearch = debounce((value)=>{
    setSearch(value.target.value)

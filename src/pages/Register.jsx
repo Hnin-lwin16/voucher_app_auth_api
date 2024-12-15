@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const {handleSubmit,register,formState:{errors}} = useForm();
-    const {navigate} = useNavigate();
+    const navigate = useNavigate();
     const onSubmit = async(data) => {
         console.log(data);
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/register`, {
