@@ -2,11 +2,14 @@
 import React from 'react'
 import Container from './Container'
 import useCookie from 'react-use-cookie';
+import useUserStore from '../store/useUserStore';
 
 const Header = () => {
   const [user] = useCookie("userProfile");
 
   const {name,email,profile_image} = JSON.parse(user);
+  const {records} = useUserStore(); 
+  // console.log(records)
   return (
     <header className="mb-5">
       
@@ -18,10 +21,10 @@ const Header = () => {
       <p className=' text-stone-500'>MMS Software</p>
       </div>
       <div className=' flex items-center gap-5'>
-        <img src={profile_image ? (profile_image): "profile.webp"} className=' size-10 rounded-full' alt="" />
+        <img src={records.profile_image ? (records.profile_image): ("../profile.webp")} className=' size-10 rounded-full' alt="" />
         <div className=' text-center'>
-          <p>{name}</p>
-          <p>{email}</p>
+          <p>{records.name}</p>
+          <p>{records.email}</p>
         </div>
       </div>
       </div>

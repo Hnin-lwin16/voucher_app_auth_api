@@ -5,10 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import useCookie from 'react-use-cookie';
+import useUserStore from '../store/useUserStore';
 const Login = () => {
     const {handleSubmit,register,formState:{errors}} = useForm();
     const [token,setToken,removeToken] = useCookie("myToken");
     const [user,setUser] = useCookie("userProfile");
+    const {records,setRecord} = useUserStore();
     const navigate = useNavigate();
     const onSubmit = async(data) => {
         console.log(data)
@@ -28,6 +30,7 @@ const Login = () => {
             // console.log(json.user);
             setUser(JSON.stringify(json.user));
             setToken(json.token);
+            setRecord(json.user);
            navigate("/dashboard");
         }else{
             toast.error(json.message);
