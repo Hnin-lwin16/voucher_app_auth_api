@@ -4,12 +4,20 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import useSWR from 'swr';
 import ShowDateTime from './ShowDateTime';
+import useCookie from 'react-use-cookie';
 
 const VoucherCard = () => {
 
     const id = useParams().id;
+    const [token, setToken] = useCookie("myToken");
    
-    const fetcher = (...args) => fetch(...args).then(res => res.json());
+    const fetcher = (url) =>
+      fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
     // console.log(import.meta.env.VITE_BASE_URL+"/vouchers/"+id)
   const { data, error, isLoading } = useSWR(import.meta.env.VITE_BASE_URL+"/vouchers/"+id, fetcher);
   

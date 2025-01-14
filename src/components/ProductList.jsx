@@ -14,6 +14,7 @@ import Pagination from "./Pagination";
 const ProductList = () => {
   const [search, setSearch] = useState("");
   const [token] = useCookie("myToken");
+  console.log(token)
   const [fetchUrl, setFetchUrl] = useState(
     import.meta.env.VITE_BASE_URL+ "/products"
   );

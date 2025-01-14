@@ -1,0 +1,35 @@
+ {
+            "id": 23,
+            "product_name": "Data Analytics Services",
+            "price": "1100.00",
+            "created_at": "2024-10-10T20:00:00.000000Z",
+            "updated_at": "2024-10-15T20:30:00.000000Z"
+        },
+        {
+            "id": 22,
+            "product_name": "Cybersecurity Services",
+            "price": "1300.00",
+            "created_at": "2024-10-01T19:00:00.000000Z",
+            "updated_at": "2024-10-05T19:30:00.000000Z"
+        },
+        {
+            "id": 21,
+            "product_name": "Mobile App Development",
+            "price": "2000.00",
+            "created_at": "2024-09-20T18:00:00.000000Z",
+            "updated_at": "2024-09-30T18:30:00.000000Z"
+        },
+        {
+            "id": 20,
+            "product_name": "Cloud Storage Solutions",
+            "price": "900.00",
+            "created_at": "2024-09-05T17:15:00.000000Z",
+            "updated_at": "2024-09-15T17:45:00.000000Z"
+        },
+        {
+            "id": 19,
+            "product_name": "Brand Strategy Consultation",
+            "price": "700.00",
+            "created_at": "2024-08-20T15:30:00.000000Z",
+            "updated_at": "2024-09-01T16:00:00.000000Z"
+        }

@@ -6,7 +6,7 @@ const Pagination = ({
     meta:{total,from,to,links},
     updateFetchUrl
 }) => {
-    console.log(prev,next);
+    // console.log(prev,next);
   return (
     <div className="flex justify-between items-center px-6">
       {/* Help text */}

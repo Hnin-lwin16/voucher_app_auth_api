@@ -15,8 +15,9 @@ const SaleListRow = ({list:{
     customer_name,
     date,
     customer_email,
-    created_at
-}}) => {
+    created_at,
+   
+},no}) => {
    
    
     const {mutate} = useSWRConfig();
@@ -40,11 +41,23 @@ const SaleListRow = ({list:{
     
       
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+        {id}
+        </Table.Cell>
         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
         {voucher_id}
         </Table.Cell>
-        <Table.Cell>{customer_name}</Table.Cell>
-        <Table.Cell className=' text-end'>{customer_email}</Table.Cell>
+        <Table.Cell>
+          <div className='flex flex-col'>
+          <span>
+          {customer_name}
+          </span>
+          <span>
+            {customer_email}
+          </span>
+          </div>
+        </Table.Cell>
+        
        <ShowDateTime created_at={created_at}/>
         <Table.Cell className=' text-end'>
       
@@ -60,7 +73,7 @@ const SaleListRow = ({list:{
         }
       
         </Button>
-        <Link to={`/vouncher/voucherDetail/${id}`}>
+        <Link to={`voucherDetail/${id}`}>
         <Button color="gray" className=' flex items-center justify-center w-10'> 
         {
             deleteLoading ? (<l-bouncy
