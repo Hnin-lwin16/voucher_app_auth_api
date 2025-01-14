@@ -6,6 +6,7 @@ import useRecordStore from '../store/useRecordStore';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import useCookie from 'react-use-cookie';
 
 const VouncherInfo = () => {
     const{
@@ -18,8 +19,9 @@ const VouncherInfo = () => {
     } = useForm();
     const {records,resetRecord} = useRecordStore();
     const [sendLoading,setSendLoading] = useState(false);
+    const [token,setToken] = useCookie("myToken");
     const navigate = useNavigate();
-    console.log(records.product)
+    console.log(records)
     const handleForm = async (sale) => {
       setSendLoading(true);
        const total = records.reduce((total,record)=>total+record.cost,0);
@@ -30,7 +32,8 @@ const VouncherInfo = () => {
       console.log({...sale,records,total,tax,net_total})
       const {data} = await axios.post(import.meta.env.VITE_BASE_URL+"/vouchers", {...sale,records,total,tax,net_total},{
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization' : `Bearer ${token}`
         }
       })
       // const res= await data.json();

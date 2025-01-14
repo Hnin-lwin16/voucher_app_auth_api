@@ -56,11 +56,11 @@ const router = createBrowserRouter([
                         element:<Sale/>
                     },
                     {
-                        path:"vouncher",
+                        path:"vouchers",
                         element:<Vouncher/>
                     },
                     {
-                        path:"vouncher/voucherDetail/:id",
+                        path:"vouchers/voucherDetail/:id",
                         element:<VoucherDetail/>
                     },
                     {

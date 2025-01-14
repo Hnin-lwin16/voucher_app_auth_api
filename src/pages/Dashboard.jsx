@@ -16,10 +16,10 @@ const Dashboard = () => {
             <Module icon={<HiCircleStack className='size-14 text-gray-50'/>} name={"Product Module"} url={"product"}/>
           </div>
           <div className=' col-span-1'>
-          <Module icon={<HiComputerDesktop className='size-14 text-gray-50'/>} name={"Sale Module"} url={"/sale"}/>
+          <Module icon={<HiComputerDesktop className='size-14 text-gray-50'/>} name={"Sale Module"} url={"sale"}/>
           </div>
           <div className=' col-span-1'>
-          <Module icon={<HiDocumentDuplicate className='size-14 text-gray-50'/>} name={"Vouncher Module"} url={"/vouncher"}/>
+          <Module icon={<HiDocumentDuplicate className='size-14 text-gray-50'/>} name={"Vouncher Module"} url={"vouchers"}/>
           </div>
           <div className=' col-span-1'>
           <Module icon={<HiUser className='size-14 text-gray-50'/>} name={"User Profile"} url={"userProfile"}/>

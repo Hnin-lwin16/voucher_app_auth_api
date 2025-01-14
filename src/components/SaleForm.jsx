@@ -3,9 +3,17 @@ import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 import VouncherTable from './VouncherTable';
 import useRecordStore from '../store/useRecordStore';
+import useCookie from 'react-use-cookie';
 
 const SaleForm = () => {
-    const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const [token,setToken] = useCookie("myToken");
+  const fetcher = (url) =>
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
     const{isLoading,data,error} = useSWR(`${import.meta.env.VITE_BASE_URL}/products`,fetcher);
     const{
         register,
@@ -17,6 +25,7 @@ const SaleForm = () => {
     } = useForm();
     const [sendLoading,setSendLoading] = React.useState(false);
     const {addRecord,records,changeQuantity} = useRecordStore();
+    {!isLoading && console.log(data)}
     const onSubmit = (data) => {
       // console.log(data.product_name);
       const currentProduct = JSON.parse(data.product_name);
@@ -62,7 +71,7 @@ const SaleForm = () => {
               required
             >
               <option value="">Select a product</option>
-              {!isLoading &&
+              {!isLoading && 
                 data.data.map((product) => (
                   <option key={product.id}  value={JSON.stringify(product)}>
                     {product.product_name}

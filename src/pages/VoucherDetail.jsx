@@ -7,7 +7,7 @@ const VoucherDetail = () => {
   return (
     <section>
     <Container>
-      <BreadCrumb link={[{name:"Vouncher Module",route:"/vouncher"}]} currentstate={"VoucherDetail Module"}/>
+      <BreadCrumb link={[{name:"Vouncher Module",route:"/dashboard/vouchers"}]} currentstate={"VoucherDetail Module"}/>
      
      <VoucherCard/>
     </Container>
